@@ -1,32 +1,36 @@
-# Includes
-include(CPack)
-include(GNUInstallDirs)
 ## Sets the project variables ##
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.16.3)
 EXECUTE_PROCESS (COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE)
 
-project (libmount-cpp VERSION 0.1)
+project (libmount-cpp VERSION 0.2)
 set (CMAKE_BUILD_TYPE Debug)
 
 set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_ECLIPSE_VERSION 4.23.0)
+
+# Adds options
+
 # CPack variables
 set (CPACK_GENERATOR "TGZ" "DEB" "RPM")
 set (CPACK_PACKAGE_NAME ${CMAKE_PROJECT_NAME})
-set (CPACK_PACKAGE_VERSION ${CMAKE_PROJECT_VERSION})
+set (CPACK_PACKAGE_VERSION ${CMAKE_PACKAGE_VERSION})
 set (CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${ARCHITECTURE})
 set (CPACK_PACKAGE_CONTACT "tgh6407@gmail.com")
 set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Timothy Hutchins")
-set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENCE")
-set (CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README.md")
+set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+set (CPACK_RESOURCE_FILE_README "${CMAKE_SOURCE_DIR}/README.md")
 set (CPACK_DEBIAN_FILE_NAME "${DEB-DEFAULT}")
 set (CPACK_PACKAGE_NAME ${PROJECT_NAME})
 set (CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
 set (CPACK_SOURCE_IGNORE_FILES "build/;/build/;//.git;.git;deps/;")
+set (CPACK_DEBIAN_PACKAGE_DEPENDS "libstdc++6 (>= 10.3.0-1ubuntu1~20.04), libc6 (>= 2.31-0ubuntu9.7), libgcc1 (>= 1:10.3.0-1ubuntu1~20.04)")
+
 
 # Sets dependancy git repository information
+
+### NO DEPENDANCIES ###
 
 # Finds needed libraries
 
@@ -36,10 +40,29 @@ set (CPACK_SOURCE_IGNORE_FILES "build/;/build/;//.git;.git;deps/;")
 file (GLOB_RECURSE SOURCES "${CMAKE_SOURCE_DIR}/src/*.cpp" "${CMAKE_SOURCE_DIR}/src/*.c")
 file (GLOB_RECURSE HEADERS "${CMAKE_SOURCE_DIR}/include/*.h" "${CMAKE_SOURCE_DIR}/include/*.hpp" "${CMAKE_SOURCE_DIR}/include/*.inl")
 
-add_library (libmount-cpp SHARED ${SOURCES} ${HEADERS})
-target_include_directories(libmount-cpp PUBLIC ${CMAKE_SOURCE_DIR}/include)
-set_target_properties(libmount-cpp PROPERTIES VERSION ${CMAKE_PROJECT_VERSION} SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR})
-target_compile_options(libmount-cpp PUBLIC "-std=c++17")
+file(GLOB_RECURSE MANDATA "${CMAKE_SOURCE_DIR}/docs/doxygen/man/man3/*")
+file(GLOB_RECURSE DOCDATA "${CMAKE_SOURCE_DIR}/docs/doxygen/html/*")
+
+add_library (mount-cpp SHARED ${SOURCES} ${HEADERS})
+target_include_directories(mount-cpp PRIVATE ${CMAKE_SOURCE_DIR}/include)
+set_target_properties(mount-cpp PROPERTIES VERSION ${CMAKE_PROJECT_VERSION} SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR} PUBLIC_HEADER ${HEADERS})
+target_compile_options(mount-cpp PUBLIC "-std=c++17")
+
+# Sets up Doxygen
+find_package(Doxygen REQUIRED dot)
+message(STATUS "Doxygen found!")
+set(DOXYGEN_EXCLUDE_PATTERNS "build/")
+set(DOXYGEN_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/docs/doxygen)
+set(DOXYGEN_GENERATE_HTML YES)
+set(DOXYGEN_GENERATE_MAN YES)
+doxygen_add_docs(docs ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src ALL WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
 
 ## Adds installation instructions ##
-install (TARGETS libmount-cpp LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} COMPONENT applications PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+message (STATUS ${CMAKE_INSTALL_DATAROOTDIR})
+install (TARGETS mount-cpp LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+install (FILES ${MANDATA} TYPE MAN)
+install (FILES ${DOCDATA} TYPE DOC)
+# Includes
+include(GNUInstallDirs)
+include(CPack)
+include(FindDoxygen)

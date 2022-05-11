@@ -1,0 +1,246 @@
+.TH "Mount" 3 "Wed May 11 2022" "Version 0.2" "libmount-cpp" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Mount
+.SH SYNOPSIS
+.br
+.PP
+.SS "Public Types"
+
+.in +1c
+.ti -1c
+.RI "enum { \fBadfs\fP, \fBaffs\fP, \fBautofs\fP, \fBcifs\fP, \fBcoda\fP, \fBcoherent\fP, \fBcramfs\fP, \fBdebugfs\fP, \fBdevpts\fP, \fBefs\fP, \fBext\fP, \fBext2\fP, \fBext3\fP, \fBext4\fP, \fBhfs\fP, \fBhfsplus\fP, \fBhpfs\fP, \fBiso9660\fP, \fBjfs\fP, \fBminix\fP, \fBmsdos\fP, \fBncpfs\fP, \fBnfs\fP, \fBnfs4\fP, \fBntfs\fP, \fBproc\fP, \fBqnx4\fP, \fBramfs\fP, \fBreiserfs\fP, \fBromfs\fP, \fBsquashfs\fP, \fBsmbfs\fP, \fBsysv\fP, \fBtmpfs\fP, \fBubifs\fP, \fBudf\fP, \fBufs\fP, \fBumsdos\fP, \fBusbfs\fP, \fBvfat\fP, \fBxenix\fP, \fBxfs\fP, \fBxiafs\fP }"
+.br
+.in -1c
+.SS "Public Member Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBfsMount\fP (std::string fsDir, std::string outDir, int fsType, std::string accessType)"
+.br
+.RI "Mounts a filesystem\&. "
+.ti -1c
+.RI "int \fBfsUmount\fP (std::string outDir)"
+.br
+.RI "Unmounts a mounted directory\&. "
+.ti -1c
+.RI "int \fBfsUmount\fP ()"
+.br
+.RI "Unmounts the last mounted directory mounted with the object\&. "
+.in -1c
+.SS "Static Public Attributes"
+
+.in +1c
+.ti -1c
+.RI "static constexpr int \fBNOROOT\fP = \-3"
+.br
+.RI "NOROOT is the error return code for a user trying to use this without root\&. "
+.ti -1c
+.RI "static constexpr int \fBMOUNTPOINTERR\fP = \-2"
+.br
+.RI "MOUNTPOINTERR is the error returned code for the mount point not existing\&. "
+.ti -1c
+.RI "static constexpr int \fBMOUNTFILEERR\fP = \-1"
+.br
+.RI "MOUNTFILEERR is the error return code for the file system mount not existing\&. "
+.ti -1c
+.RI "static const std::string \fBREADONLY\fP = 'ro'"
+.br
+.RI "READONLY is the Read Only attribute\&. "
+.ti -1c
+.RI "static const std::string \fBREADWRITE\fP = 'rw'"
+.br
+.RI "READWRITE is the Read and Write attribute\&. "
+.in -1c
+.SH "Member Enumeration Documentation"
+.PP 
+.SS "anonymous enum"
+
+.PP
+\fBEnumerator\fP
+.in +1c
+.TP
+\fB\fIadfs \fP\fP
+adfs 
+.TP
+\fB\fIaffs \fP\fP
+affs 
+.TP
+\fB\fIautofs \fP\fP
+autofs 
+.TP
+\fB\fIcifs \fP\fP
+cifs 
+.TP
+\fB\fIcoda \fP\fP
+coda 
+.TP
+\fB\fIcoherent \fP\fP
+coherent 
+.TP
+\fB\fIcramfs \fP\fP
+cramfs 
+.TP
+\fB\fIdebugfs \fP\fP
+debugfs 
+.TP
+\fB\fIdevpts \fP\fP
+devpts 
+.TP
+\fB\fIefs \fP\fP
+efs 
+.TP
+\fB\fIext \fP\fP
+ext 
+.TP
+\fB\fIext2 \fP\fP
+ext2 
+.TP
+\fB\fIext3 \fP\fP
+ext3 
+.TP
+\fB\fIext4 \fP\fP
+ext4 
+.TP
+\fB\fIhfs \fP\fP
+hfs 
+.TP
+\fB\fIhfsplus \fP\fP
+hfsplus 
+.TP
+\fB\fIhpfs \fP\fP
+hpfs 
+.TP
+\fB\fIiso9660 \fP\fP
+iso9660 
+.TP
+\fB\fIjfs \fP\fP
+jfs 
+.TP
+\fB\fIminix \fP\fP
+minix 
+.TP
+\fB\fImsdos \fP\fP
+msdos 
+.TP
+\fB\fIncpfs \fP\fP
+ncpfs 
+.TP
+\fB\fInfs \fP\fP
+nfs 
+.TP
+\fB\fInfs4 \fP\fP
+nfs4 
+.TP
+\fB\fIntfs \fP\fP
+ntfs 
+.TP
+\fB\fIproc \fP\fP
+proc 
+.TP
+\fB\fIqnx4 \fP\fP
+qnx4 
+.TP
+\fB\fIramfs \fP\fP
+ramfs 
+.TP
+\fB\fIreiserfs \fP\fP
+reiserfs 
+.TP
+\fB\fIromfs \fP\fP
+romfs 
+.TP
+\fB\fIsquashfs \fP\fP
+squashfs 
+.TP
+\fB\fIsmbfs \fP\fP
+smbfs 
+.TP
+\fB\fIsysv \fP\fP
+sysv 
+.TP
+\fB\fItmpfs \fP\fP
+tmpfs 
+.TP
+\fB\fIubifs \fP\fP
+ubifs 
+.TP
+\fB\fIudf \fP\fP
+udf 
+.TP
+\fB\fIufs \fP\fP
+ufs 
+.TP
+\fB\fIumsdos \fP\fP
+umsdos 
+.TP
+\fB\fIusbfs \fP\fP
+usbfs 
+.TP
+\fB\fIvfat \fP\fP
+vfat 
+.TP
+\fB\fIxenix \fP\fP
+xenix 
+.TP
+\fB\fIxfs \fP\fP
+xfs 
+.TP
+\fB\fIxiafs \fP\fP
+xiafs 
+.SH "Member Function Documentation"
+.PP 
+.SS "int Mount::fsMount (std::string fsDir, std::string outDir, int fsType, std::string accessType)"
+
+.PP
+Mounts a filesystem\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIfsDir\fP The filesystem file, ex\&. \fC/dev/sdc\fP 
+.br
+\fIoutDir\fP The output or mountpoint directory\&. ex\&. \fC/home/user/mountpoint\fP 
+.br
+\fIfsType\fP The Filesystem type\&. ex\&. 'squashfs' \fC\fBMount::squashfs\fP\fP 
+.br
+\fIaccessType\fP The access type\&. Read Only or Read Write\&. ex\&. \fC\fBMount::READWRITE\fP\fP \fC\fBMount::READONLY\fP\fP 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SS "int Mount::fsUmount ()"
+
+.PP
+Unmounts the last mounted directory mounted with the object\&. 
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+.SS "int Mount::fsUmount (std::string outDir)"
+
+.PP
+Unmounts a mounted directory\&. 
+.PP
+\fBParameters\fP
+.RS 4
+\fIoutDir\fP The directory that is mounted to 
+.RE
+.PP
+\fBReturns\fP
+.RS 4
+int 
+.RE
+.PP
+
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for libmount-cpp from the source code\&.

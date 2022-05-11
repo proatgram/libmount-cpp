@@ -63,13 +63,7 @@ int Mount::fsMount(std::string fsDir, std::string outDir, int fsType, std::strin
 		return EXIT_SUCCESS;
 	}
 }
-/**
- *
- * @fn int fsUmount()
- * @brief Unmounts the currently STORED item.
- *
- * @return int
- */
+
 int Mount::fsUmount() {
 	// Checks to see if we are running as root.
 	// ARoot is required to use the `umount` command
