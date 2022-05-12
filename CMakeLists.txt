@@ -1,3 +1,6 @@
+# Cache Include
+include(FindDoxygen)
+
 ## Sets the project variables ##
 cmake_minimum_required(VERSION 3.16.3)
 EXECUTE_PROCESS (COMMAND getconf LONG_BIT COMMAND tr -d '\n' OUTPUT_VARIABLE ARCH)
@@ -12,6 +15,9 @@ else()
 	message(FATAL_ERROR "Unknown Architecture type.")
 endif()
 message(STATUS "Detected architecture: ${ARCHITECTURE}")
+set (CPACK_DEBIAN_PACKAGE_ARCHITECTURE ${ARCHITECTURE})
+
+
 project (libmount-cpp VERSION 0.2)
 set (CMAKE_BUILD_TYPE Debug)
 
@@ -61,6 +67,10 @@ target_include_directories(mount-cpp PRIVATE ${CMAKE_SOURCE_DIR}/include)
 set_target_properties(mount-cpp PROPERTIES VERSION ${CMAKE_PROJECT_VERSION} SOVERSION ${CMAKE_PROJECT_VERSION_MAJOR} PUBLIC_HEADER ${HEADERS})
 target_compile_options(mount-cpp PUBLIC "-std=c++17")
 
+# Cache include that needed architecture
+
+include(GNUInstallDirs)
+
 # Sets up Doxygen
 find_package(Doxygen REQUIRED dot)
 message(STATUS "Doxygen found!")
@@ -75,6 +85,4 @@ install (TARGETS mount-cpp LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR} PUBLIC_HE
 install (FILES ${MANDATA} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/man/man3)
 install (FILES ${DOCDATA} DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/doc/libmount-cpp)
 # Includes
-include(GNUInstallDirs)
 include(CPack)
-include(FindDoxygen)
